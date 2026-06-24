@@ -53,7 +53,7 @@ const TIPO_COLOR: Record<TipoOS, string> = {
   orcamento: 'bg-amber-900/40 text-amber-400 border-amber-800',
 }
 const STATUS_LABEL: Record<StatusOS, string> = {
-  rascunho: 'Rascunho', aprovado: 'Aprovado', reprovado: 'Reprovado',
+  rascunho: 'Orçamento', aprovado: 'Aprovado', reprovado: 'Reprovado',
   em_andamento: 'Em andamento', concluido: 'Concluído', cancelado: 'Cancelado',
 }
 const STATUS_COLOR: Record<StatusOS, string> = {
