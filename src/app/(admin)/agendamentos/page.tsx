@@ -5,12 +5,22 @@ import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { Calendar, Search, Filter } from 'lucide-react'
 
-const STATUS = ['todos', 'pendente', 'em_andamento', 'concluido', 'cancelado']
+const STATUS = ['todos', 'pendente', 'confirmado', 'em_andamento', 'concluido', 'cancelado']
+const STATUS_LABEL: Record<string, string> = {
+  pendente:             'Pendente',
+  confirmado:           'Agendamento Aprovado',
+  em_andamento:         'Em andamento',
+  concluido:            'Concluído',
+  cancelado:            'Cancelado',
+  aguardando_pagamento: 'Ag. Pagamento',
+}
 const STATUS_STYLE: Record<string, string> = {
-  pendente:     'bg-yellow-900/40 text-yellow-400',
-  em_andamento: 'bg-blue-900/40 text-blue-400',
-  concluido:    'bg-green-900/40 text-green-400',
-  cancelado:    'bg-red-900/40 text-red-400',
+  aguardando_pagamento: 'bg-purple-900/40 text-purple-400',
+  pendente:             'bg-yellow-900/40 text-yellow-400',
+  confirmado:           'bg-green-900/40 text-green-400',
+  em_andamento:         'bg-blue-900/40 text-blue-400',
+  concluido:            'bg-emerald-900/40 text-emerald-400',
+  cancelado:            'bg-red-900/40 text-red-400',
 }
 const PAG_STYLE: Record<string, string> = {
   pendente:    'bg-yellow-900/30 text-yellow-500',
@@ -80,7 +90,7 @@ export default function AgendamentosPage() {
               filtro === s ? 'bg-[#C9A84C] text-[#0D0D0D]' : 'bg-[#1A1A1A] text-[#AAA] border border-[#2A2A2A] hover:border-[#C9A84C]'
             }`}
           >
-            {s.replace('_', ' ')}
+            {s === 'todos' ? 'Todos' : STATUS_LABEL[s] ?? s}
           </button>
         ))}
       </div>
@@ -120,10 +130,10 @@ export default function AgendamentosPage() {
                     <select
                       value={a.status}
                       onChange={e => atualizar(a.id, e.target.value)}
-                      className={`text-xs px-2 py-1 rounded-full font-semibold border-0 cursor-pointer ${STATUS_STYLE[a.status]}`}
+                      className={`text-xs px-2 py-1 rounded-lg font-semibold border-0 cursor-pointer ${STATUS_STYLE[a.status] ?? 'bg-zinc-800 text-zinc-400'}`}
                     >
-                      {['pendente','em_andamento','concluido','cancelado'].map(s => (
-                        <option key={s} value={s}>{s.replace('_',' ')}</option>
+                      {['pendente','confirmado','em_andamento','concluido','cancelado'].map(s => (
+                        <option key={s} value={s}>{STATUS_LABEL[s]}</option>
                       ))}
                     </select>
                   </td>
